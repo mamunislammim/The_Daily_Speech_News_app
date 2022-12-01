@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                  InkWell(
                    onTap: ()async{
                       if(_email.text.isEmpty){
-                       toast("Enter  Your Email");
+                       toast("Enter Your Email");
                       }
                       else if(_password.text.isEmpty){
                        toast("Enter Your Password");
@@ -70,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       toast("Password must be 6 character");
                       }
                       else{
+                        EasyLoading.show(status: "Signing In");
                         var result = await NewsRepo().logInRepo(_email.text, _password.text);
                         if(result){
                           EasyLoading.showSuccess(" Login Successful");

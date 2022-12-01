@@ -20,10 +20,20 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        leading: CircleAvatar(
+          backgroundColor: Colors.blue,
+          child: const Icon(Icons.arrow_back,color: Colors.white,).onTap((){
+            Navigator.pop(context);
+          }),
+        ),
+      ),
       backgroundColor: Colors.teal,
       body: ListView(
-        padding: EdgeInsets.only(top: height / 8, left: 20, right: 20),
+        padding: EdgeInsets.only(top: height / 5, left: 20, right: 20),
         children: [
           const Text(
             "Current Password",

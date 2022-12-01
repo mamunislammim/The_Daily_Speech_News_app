@@ -148,7 +148,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 else if(_cPassword.text.isEmpty){
                   toast("Enter Confirm Password");
                 }
-                else if(_password==_cPassword){
+                else if(_password == _cPassword){
                   toast("Password Not Matched");
                 }
                 else if(_password.text.length < 6){
@@ -156,8 +156,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 }
                 else{
                  try{
+                   final prefs = await SharedPreferences.getInstance();
+                   EasyLoading.show(status: "Signing Up");
                    var result = await NewsRepo().userRegistrationRepo(_fName.text, _lName.text, _email.text, _phone.text, _password.text, _cPassword.text);
                    if(result){
+                       prefs.setString('fName', _fName.text);
+                       prefs.setString('lName', _lName.text);
+                       prefs.setString('email',  _email.text);
+                       prefs.setString('phone', _phone.text);
                      EasyLoading.showSuccess("Sign Up Successful");
                      HomeScreen().launch(context);
                    }

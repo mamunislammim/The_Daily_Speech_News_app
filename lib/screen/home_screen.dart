@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void getName() async {
     final prefs = await SharedPreferences.getInstance();
     _profileFName = prefs.getString("fName");
-    _profileLName = prefs.getString("fName");
+    _profileLName = prefs.getString("lName");
     _profileEmail = prefs.getString("email");
     _profilePhone = prefs.getString("phone");
   }
@@ -51,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         // Drawer
         drawer: DrawerWidget(
-            profileFName: _profileFName,
-            profileLName: _profileLName,
-            profilePhone: _profilePhone,
-            profileEmail: _profileEmail),
+            fName: _profileFName,
+            lName: _profileLName,
+            phone: _profilePhone,
+            email: _profileEmail),
 
         // AppBar
         appBar: AppBar(
@@ -63,12 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Thoughtful News",
+                "Latest News",
                 style: TextStyle(
                     color: Colors.white.withOpacity(.8), fontSize: 14),
               ),
               const Text(
-                "BD NEWS 24",
+                "The Daily Speech",
                 style: TextStyle(color: Colors.white, fontSize: 30),
               )
             ],

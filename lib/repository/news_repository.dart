@@ -11,6 +11,7 @@ import '../models/News_category_model.dart';
 import '../models/User_registration_model.dart';
 
 class NewsRepo {
+
   // Latest News
   Future<LatestNewsModels> latestNewsRepo() async {
     var response =
@@ -69,9 +70,11 @@ class NewsRepo {
           'password': password,
           'password_confirmation': cPassword
         });
+    final prefs = await SharedPreferences.getInstance();
     var data = jsonDecode(response.body);
     if (response.statusCode == 201) {
-      UserRegistrationModel.fromJson(data);
+      var message = UserRegistrationModel.fromJson(data);
+      prefs.setString('token', message.accessToken.toString());
       return true;
     } else {
       // print(response.statusCode);
@@ -87,7 +90,7 @@ class NewsRepo {
     final prefs = await SharedPreferences.getInstance();
     if (response.statusCode == 200) {
       var message = LoginModels.fromJson(jsonDecode(response.body));
-      await prefs.setString('token', message.accessToken.toString());
+        prefs.setString('token', message.accessToken.toString());
       //print("token : ${message.accessToken.toString()}");
       return true;
     } else {
@@ -111,10 +114,8 @@ class NewsRepo {
         headers: <String, String>{
           'Authorization': "Bearer $token"
         });
-
     if (response.statusCode == 200) {
-      print("Status Code Update Profile : ${response.statusCode}");
-      return true;
+        return true;
     } else {
       throw Exception("Error Update Profile");
     }

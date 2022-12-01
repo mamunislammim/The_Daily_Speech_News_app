@@ -21,89 +21,104 @@ class _CategoryNewsListScreenState extends State<CategoryNewsListScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(colors: [
-            Colors.blue.withOpacity(.3),
-            Colors.green.withOpacity(.3)
-          ], end: Alignment.topRight, begin: Alignment.bottomRight),
-          color: Colors.blueAccent,
+    return SafeArea(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          leading:   CircleAvatar(
+            backgroundColor: Colors.blue,
+            child: const Icon(Icons.arrow_back,color: Colors.white,).onTap((){
+              Navigator.pop(context);
+            }),
+          ),
         ),
-        child: Consumer(builder: (_, ref, watch) {
-          AsyncValue<CategoryNewsListModels> categoryNewsList =
-              ref.watch(categoryNewsListRiverpod(widget.getId));
-          return categoryNewsList.when(data: (news) {
-            return ListView.builder(
-              itemCount: news.datas!.data!.length,
-              itemBuilder: (_, index) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    gradient: const LinearGradient(
-                        colors: [Colors.blue, Colors.green],
-                        end: Alignment.topRight,
-                        begin: Alignment.bottomRight),
-                    color: Colors.blueAccent,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                            top: 7, bottom: 10, left: 4, right: 4),
-                        height: height / 2.5,
-                        width: width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(
-                                news.datas!.data![index].image![0].toString(),
-                              )),
+        body: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(colors: [
+              Colors.blue.withOpacity(.3),
+              Colors.green.withOpacity(.3)
+            ], end: Alignment.topRight, begin: Alignment.bottomRight),
+            color: Colors.blueAccent,
+          ),
+          child: Consumer(builder: (_, ref, watch) {
+            AsyncValue<CategoryNewsListModels> categoryNewsList =
+                ref.watch(categoryNewsListRiverpod(widget.getId));
+            return categoryNewsList.when(data: (news) {
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: news.datas!.data!.length,
+                itemBuilder: (_, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: const LinearGradient(
+                          colors: [Colors.blue, Colors.green],
+                          end: Alignment.topRight,
+                          begin: Alignment.bottomRight),
+                      color: Colors.blueAccent,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(
+                              top: 7, bottom: 10, left: 4, right: 4),
+                          height: height / 2.7,
+                          width: width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                  news.datas!.data![index].image![0].toString(),
+                                )),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
-                        child: Text(
-                          news.datas!.data![index].title.toString(),
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Text(
+                            news.datas!.data![index].title.toString(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10, bottom: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Read More",
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(.8)),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ).onTap(() {
-                  NewsDetailsScreen(
-                    endPointID: news.datas!.data![index].id.toString(),
-                  ).launch(context);
-                });
-              },
-            );
-          }, error: (e, stack) {
-            return Text(e.toString());
-          }, loading: () {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          });
-        }),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, bottom: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Read More",
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(.8)),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ).onTap(() {
+                    NewsDetailsScreen(
+                      endPointID: news.datas!.data![index].id.toString(),
+                    ).launch(context);
+                  });
+                },
+              );
+            }, error: (e, stack) {
+              return Text(e.toString());
+            }, loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            });
+          }),
+        ),
+
       ),
     );
   }

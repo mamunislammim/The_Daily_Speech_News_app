@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:news_app_with_api/screen/splash_screen.dart';
-
-import '../screen/update_profile.dart';
 
 class AccountPageWidget extends StatelessWidget {
   const AccountPageWidget({Key? key}) : super(key: key);

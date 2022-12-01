@@ -26,70 +26,81 @@ class NewsDetailsScreen extends StatelessWidget {
           AsyncValue<DetailsNewsModel> details =
               ref.watch(detailsNewsRiverpod(endPointID));
           return details.when(data: (news) {
-            return ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey,
-                      border: Border.all(
-                        color: Colors.red,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10))),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: height / 3.5,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(news.data!.image![0])),
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        border: Border.all(
+                          color: Colors.red,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          news.data!.title.toString(),
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                        borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10))),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: height / 3.5,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(news.data!.image![0])),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                  // Date
-                  Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(news.data!.date.toString()),
-                ),
-
-                // News Category
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(news.data!.newsCategory.toString()),
-                ),
-
-                //Comments
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(news.data!.comments.toString()),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    Bidi.stripHtmlIfNeeded(news.data!.description.toString()),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            news.data!.title.toString(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                    
+                  // Date
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8,left: 10,right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(news.data!.date.toString(),style: TextStyle(color: Colors.white.withOpacity(.8),fontWeight: FontWeight.bold),),
+                        Text(news.data!.reporterName.toString(),style: TextStyle(color: Colors.white.withOpacity(.8),fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                  ),
+
+                  // News Category
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(news.data!.newsCategory.toString()),
+                  ),
+
+                  //Comments
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(news.data!.comments.toString()),
+                  ),
+                  
+                  // Description
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      Bidi.stripHtmlIfNeeded(news.data!.description.toString()),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+
+
+                ],
+              ),
             );
           }, error: (e, stack) {
             return const Center(child: Text("Data Not Found..!!!",style: TextStyle(color: Colors.tealAccent,fontSize: 20,fontWeight: FontWeight.bold),));
