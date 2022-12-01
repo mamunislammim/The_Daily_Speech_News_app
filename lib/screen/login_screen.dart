@@ -61,22 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
                  InkWell(
                    onTap: ()async{
                       if(_email.text.isEmpty){
-                        EasyLoading.show(status: "Enter Email");
+                       toast("Enter  Your Email");
                       }
                       else if(_password.text.isEmpty){
-                        EasyLoading.show(status: "Enter Password");
+                       toast("Enter Your Password");
                       }
                       else if(_password.text.length < 6){
-                        EasyLoading.show(status: "Wrong Password");
+                      toast("Password must be 6 character");
                       }
                       else{
                         var result = await NewsRepo().logInRepo(_email.text, _password.text);
                         if(result){
-                          EasyLoading.showSuccess("Successful");
+                          EasyLoading.showSuccess(" Login Successful");
                           HomeScreen().launch(context);
                         }
                         else{
-                          EasyLoading.showError("Failed");
+                          EasyLoading.showError(" Login Failed");
                         }
                       }
                    },

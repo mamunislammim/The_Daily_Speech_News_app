@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:news_app_with_api/Riverpod/riverpod_repo.dart';
 import 'package:news_app_with_api/models/News_category_model.dart';
-import 'package:news_app_with_api/screen/news_details_screen.dart';
+import 'package:news_app_with_api/screen/category_news_list_screen.dart';
+
+import '../screen/news_details_screen.dart';
 
 class CategoryPageWidget extends StatelessWidget {
   const CategoryPageWidget({Key? key}) : super(key: key);
@@ -30,7 +32,8 @@ class CategoryPageWidget extends StatelessWidget {
                   itemBuilder: (_, index) {
                     return InkWell(
                       onTap: (){
-                        NewsDetailsScreen(endPointID: news.datas!.data![index].id.toString(),).launch(context);
+                        // NewsDetailsScreen(endPointID: news.datas!.data![index].id.toString(),).launch(context);
+                        CategoryNewsListScreen(getId: news.datas!.data![index].id.toString()).launch(context);
                       },
                       child: Container(
                         width: width / 2,
