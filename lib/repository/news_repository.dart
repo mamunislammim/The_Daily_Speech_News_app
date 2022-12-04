@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:news_app_with_api/models/Details_news_model.dart';
+import 'package:news_app_with_api/models/Get_news_comment_models.dart';
 import 'package:news_app_with_api/models/Login_models.dart';
+import 'package:news_app_with_api/models/Search_news_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Data_List/server_config.dart';
 import '../models/Category_news_list_models.dart';
@@ -162,7 +164,8 @@ class NewsRepo {
     }
   }
 
-  // contact us
+
+  // Contact us
   Future<bool> contactUsRepo(String name,String email, String message)async{
     var response =await http.post(Uri.parse(Server.newsServerUrl+Server.contactUsUrl),body: <String,String>{
       'name' : name,
@@ -180,5 +183,50 @@ class NewsRepo {
   }
 
 
+  // Write a Comment
+  Future<bool> newsComment(String newsId,String comment)async{
+    final prefs = await SharedPreferences.getInstance();
 
+    String name = "smart Mamun";
+    String email = "test@gmail.com";
+    var response = await http.post(Uri.parse(Server.newsServerUrl + Server.newsCommentUrl),body: <String,String>{
+      'news_id' : newsId,
+      'name': name,
+      'email': email,
+      'comment': comment
+    });
+
+    if(response.statusCode==200){
+      return true;
+    }
+    else{
+      return throw Exception("Error Comment");
+    }
+  }
+
+  // See All Comment
+  Future<GetNewsCommentModels> getNewsComment(String id)async{
+    var response = await http.get(Uri.parse(Server.newsServerUrl + Server.getCommentUrl + id));
+
+    if(response.statusCode==200){
+      return GetNewsCommentModels.fromJson(jsonDecode(response.body));
+    }
+    else{
+      return throw Exception("Error");
+    }
+  }
+
+  // Search News
+  Future<SearchNewsModels> searchNews(String search)async{
+    var response = await http.post(Uri.parse(Server.newsServerUrl+Server.searchUrl),body: <String,String>{
+      'search' : search
+    });
+
+    if(response.statusCode==200){
+      return SearchNewsModels.fromJson(jsonDecode(response.body));
+    }
+    else {
+      return throw Exception("Error Search");
+    }
+  }
 }

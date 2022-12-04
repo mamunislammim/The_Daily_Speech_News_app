@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:news_app_with_api/Widget/account_page_widget.dart';
 import 'package:news_app_with_api/Widget/category_page_widget.dart';
 import 'package:news_app_with_api/Widget/home_page_widget.dart';
+import 'package:news_app_with_api/screen/search_screen.dart';
 import '../Widget/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _profileLName = "";
   String? _profileEmail = "";
   String? _profilePhone = "";
+
   void getName() async {
     final prefs = await SharedPreferences.getInstance();
     _profileFName = prefs.getString("fName");
@@ -47,6 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+   // double height = MediaQuery.of(context).size.height;
+    double widget = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         // Drawer
@@ -67,13 +72,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                     color: Colors.white.withOpacity(.8), fontSize: 14),
               ),
-              const Text(
+              Text(
                 "The Daily Speech",
-                style: TextStyle(color: Colors.white, fontSize: 30),
-              )
+                style: TextStyle(color: Colors.white, fontSize: widget/14),
+              ),
             ],
           ),
           centerTitle: true,
+          actions: [
+            const SizedBox(
+              height: 20,
+               width: 50,
+              child: Icon(Icons.search,size: 40,),
+            ).onTap((){const SearchScreen().launch(context);})
+          ],
         ),
 
         // Body

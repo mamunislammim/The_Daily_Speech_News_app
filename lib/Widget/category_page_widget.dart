@@ -5,8 +5,6 @@ import 'package:news_app_with_api/Riverpod/riverpod_repo.dart';
 import 'package:news_app_with_api/models/News_category_model.dart';
 import 'package:news_app_with_api/screen/category_news_list_screen.dart';
 
-import '../screen/news_details_screen.dart';
-
 class CategoryPageWidget extends StatelessWidget {
   const CategoryPageWidget({Key? key}) : super(key: key);
 
@@ -19,7 +17,9 @@ class CategoryPageWidget extends StatelessWidget {
         AsyncValue<NewsCategoryModel> category = ref.watch(newsCategoryRiverpod);
         return category.when(
             data: (news){
-              return GridView.builder(
+              return RefreshIndicator(
+                  onRefresh: ()async => await ref.refresh(newsCategoryRiverpod),
+              child:  GridView.builder(
                   padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                   itemCount: news.datas!.data!.length,
                   shrinkWrap: true,
@@ -52,14 +52,15 @@ class CategoryPageWidget extends StatelessWidget {
                               decoration:   BoxDecoration(
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                      news.datas!.data![index].image.toString(),
+                                        news.datas!.data![index].image.toString(),
                                       ),
-                                      fit: BoxFit.fill)),
+                                      fit: BoxFit.fill)
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                               news.datas!.data![index].name.toString(),
+                                news.datas!.data![index].name.toString(),
                                 style: TextStyle(
                                     fontSize: width/17,
                                     color: Colors.white, fontWeight: FontWeight.bold),
@@ -69,7 +70,8 @@ class CategoryPageWidget extends StatelessWidget {
                         ),
                       ),
                     );
-                  });
+                  }),
+              );
             },
             error: (e,stack){
               return Text(e.toString());

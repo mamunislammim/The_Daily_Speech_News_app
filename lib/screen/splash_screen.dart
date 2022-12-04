@@ -3,6 +3,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:news_app_with_api/screen/home_screen.dart';
 import 'package:news_app_with_api/screen/login_screen.dart';
 
+
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -18,10 +20,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 8)).then((value) {
     if(token.isEmptyOrNull){
-      LoginScreen().launch(context);
+      const LoginScreen().launch(context);
     }
     else{
-      HomeScreen().launch(context);
+      const HomeScreen().launch(context);
     }}
     );
 
@@ -36,7 +38,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-   double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -49,7 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
               child: const Text("The",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.bold,fontSize: 50),),
             ),
           const Text("Daily Speech",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.bold,fontSize: 50),),
-
             Container(
               height: MediaQuery.of(context).size.height/2,
               width: MediaQuery.of(context).size.width,

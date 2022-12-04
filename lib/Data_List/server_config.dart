@@ -1,5 +1,4 @@
-
-class Server{
+class Server {
   static String newsServerUrl = "http://maannews.maantechnology.com/api/";
   static String latestNewsUrl = "latest_news";
   static String detailsNewsUrl = "news_details/";
@@ -12,7 +11,7 @@ class Server{
   static String userLogoutUrl = "user_logout";
   static String changePasswordUrl = "change_password";
   static String contactUsUrl = "contact_us";
+  static String newsCommentUrl = "news_comment";
+  static String getCommentUrl = "news_comments/";
+  static String searchUrl = "search_news";
 }
-
-
-
